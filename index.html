@@ -51,9 +51,13 @@
 
 				<nav class="site-navigation" id="site-navigation" aria-label="Navegación principal">
 					<ul class="site-navigation__list">
-						<li><a class="site-navigation__link site-navigation__link--active" href="index.html">INICIO</a></li>
-						<li><a class="site-navigation__link" href="#cursos">CURSOS</a></li>
-						<li><a class="site-navigation__link" href="#autoescuela">AUTOESCUELA</a></li>
+						<li class="site-navigation__courses">
+							<button class="site-navigation__link site-navigation__courses-toggle" type="button" aria-expanded="false" aria-controls="menu-courses-panel">CURSOS</button>
+							<div class="menu-courses" id="menu-courses-panel" hidden>
+								<p class="menu-courses__status" id="menu-courses-status" role="status">Cargando cursos...</p>
+								<ul class="menu-courses__list" id="menu-courses-list"></ul>
+							</div>
+						</li>
 						<li><a class="site-navigation__link" href="#contacto">CONTACTO</a></li>
 					</ul>
 					<a class="enrol-button" href="#preinscripcion">QUIERO PREINSCRIBIRME</a>
@@ -68,7 +72,7 @@
 				<h1 id="hero-title"><span class="hero-line">Recupera tus <span>puntos.</span></span><span class="hero-line">Recupera tu <span>permiso.</span></span></h1>
 				<p>En <strong>Autoescuela BARAÑAIN</strong> te ayudamos a encontrar el curso que necesitas y a saber <strong>cuándo puedes hacerlo</strong>.</p>
 				<div class="hero__actions">
-					<a class="hero-button hero-button--primary" href="#cursos">VER PRÓXIMOS CURSOS <span aria-hidden="true">→</span></a>
+					<a class="hero-button hero-button--primary" href="https://www.google.com/maps?q=C%2F%20Pedro%20Bidagor%2C%207%20Bajo%2C%20Bara%C3%B1%C3%A1in%2C%20Navarra">DÓNDE ESTAMOS <span aria-hidden="true">→</span></a>
 					<a class="hero-button hero-button--dark" href="https://wa.me/34649230920">WhatsApp 649 230 920</a>
 					<a class="hero-button hero-button--light" href="https://wa.me/34628752061">WhatsApp 628 752 061</a>
 				</div>
@@ -144,36 +148,15 @@
 		</div>
 	</section>
 
-	<section class="features-strip" aria-label="Ventajas de Autoescuela Barañain">
-		<div class="container features-strip__list">
-			<article class="feature-item">
-				<span class="feature-item__icon" aria-hidden="true">★</span>
-				<div>
-					<h2>Experiencia y profesionalidad</h2>
-					<p>Más de 30 años formando conductores</p>
-				</div>
-			</article>
-			<article class="feature-item">
-				<span class="feature-item__icon" aria-hidden="true">✦</span>
-				<div>
-					<h2>Atención personalizada</h2>
-					<p>Resolvemos tus dudas</p>
-				</div>
-			</article>
-			<article class="feature-item">
-				<span class="feature-item__icon" aria-hidden="true">●</span>
-				<div>
-					<h2>Fácil acceso</h2>
-					<p>En el centro de Barañáin (Navarra)</p>
-				</div>
-			</article>
-		</div>
-	</section>
-
 	<section class="exam-strip" aria-labelledby="exam-strip-title">
 		<div class="container exam-strip__content">
 			<div class="exam-strip__intro">
-				<span class="exam-strip__icon" aria-hidden="true"></span>
+				<svg class="exam-strip__icon" viewBox="0 0 64 52" aria-hidden="true" focusable="false">
+					<path d="M3 17 32 3l29 14-29 14L3 17Z" fill="currentColor"/>
+					<path d="M20 25v10c0 7 24 7 24 0V25L32 31 20 25Z" fill="currentColor"/>
+					<path d="M55 18v17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3"/>
+					<circle cx="55" cy="39" r="3" fill="currentColor"/>
+				</svg>
 				<div>
 					<h2 id="exam-strip-title">Te ayudamos a superar el examen de la DGT</h2>
 					<span class="exam-strip__badge">SIN COSTE ADICIONAL</span>
@@ -257,7 +240,7 @@
 					</label>
 					<label>
 						<input type="radio" name="tipo" value="J">
-						Sensibilización y Reeducación Vial
+						Mandamiento Judicial
 					</label>
 				</fieldset>
 

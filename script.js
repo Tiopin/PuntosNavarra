@@ -1,5 +1,10 @@
 const menuToggle = document.querySelector('.menu-toggle');
 const siteNavigation = document.querySelector('.site-navigation');
+const menuCourses = document.querySelector('.site-navigation__courses');
+const menuCoursesToggle = document.querySelector('.site-navigation__courses-toggle');
+const menuCoursesPanel = document.querySelector('#menu-courses-panel');
+const menuCoursesList = document.querySelector('#menu-courses-list');
+const menuCoursesStatus = document.querySelector('#menu-courses-status');
 const schoolSection = document.querySelector('.school-section');
 const schoolToggle = document.querySelector('.school-section__toggle');
 const schoolPanel = document.querySelector('#school-section-panel');
@@ -9,12 +14,45 @@ let navigationInProgress = false;
 let navigationTarget = null;
 let openedFromContact = false;
 
+function cerrarMenuCursos() {
+	if (!menuCoursesToggle || !menuCoursesPanel) {
+		return;
+	}
+
+	menuCoursesToggle.setAttribute('aria-expanded', 'false');
+	menuCoursesPanel.hidden = true;
+}
+
+if (menuCourses && menuCoursesToggle && menuCoursesPanel) {
+	menuCoursesToggle.addEventListener('click', () => {
+		const isOpen = menuCoursesToggle.getAttribute('aria-expanded') !== 'true';
+		menuCoursesToggle.setAttribute('aria-expanded', String(isOpen));
+		menuCoursesPanel.hidden = !isOpen;
+	});
+
+	document.addEventListener('keydown', event => {
+		if (event.key === 'Escape') {
+			cerrarMenuCursos();
+		}
+	});
+
+	document.addEventListener('click', event => {
+		if (!menuCourses.contains(event.target)) {
+			cerrarMenuCursos();
+		}
+	});
+}
+
 if (menuToggle && siteNavigation) {
 	menuToggle.addEventListener('click', () => {
 		const isOpen = siteNavigation.classList.toggle('is-open');
 
 		menuToggle.setAttribute('aria-expanded', String(isOpen));
 		menuToggle.querySelector('.sr-only').textContent = isOpen ? 'Cerrar menú' : 'Abrir menú';
+
+		if (!isOpen) {
+			cerrarMenuCursos();
+		}
 	});
 }
 
@@ -153,7 +191,7 @@ if (schoolSection && schoolToggle && schoolPanel) {
 		navigationTarget = scrollTarget;
 	};
 
-	document.querySelectorAll('.site-navigation__link').forEach(link => {
+	document.querySelectorAll('a.site-navigation__link').forEach(link => {
 		link.addEventListener('click', event => {
 			event.preventDefault();
 			navigateFromMenu(link.getAttribute('href'));
@@ -275,15 +313,16 @@ if (enrolButton && preinscripcionSection) {
 
 		mostrarCursoSeleccionado(curso);
 
-		// Sin curso no hay forma de deducir el tipo: lo elige la persona.
+		// La tarjeta fija el curso concreto, pero la persona siempre puede elegir el tipo.
 		const selectorTipo = preinscripcionSection.querySelector('#preinscripcion-tipo');
 		if (selectorTipo) {
-			selectorTipo.hidden = Boolean(curso);
+			selectorTipo.hidden = false;
 			if (curso) {
+				const tipoInicial = curso.etiqueta?.trim().toUpperCase().startsWith('TOTAL') ? 'B' : 'A';
 				selectorTipo
 					.querySelectorAll('input[name="tipo"]')
 					.forEach((opcion) => {
-						opcion.checked = false;
+						opcion.checked = opcion.value === tipoInicial;
 					});
 			}
 		}
@@ -342,16 +381,8 @@ if (enrolButton && preinscripcionSection) {
 			return texto || null;
 		}
 
-		// El backend exige tipo; con curso se deduce de su etiqueta y sin curso lo elige la persona.
-		// Sin curso la etiqueta anterior sigue en el DOM oculto, así que no debe leerse.
 		function tipoDelCursoSeleccionado() {
-			if (!preinscripcionSection.dataset.cursoId) {
-				return preinscripcionForm.querySelector('input[name="tipo"]:checked')?.value || null;
-			}
-
-			const etiqueta = preinscripcionSection
-				.querySelector('[data-curso="etiqueta"]')?.textContent || '';
-			return etiqueta.trim().toUpperCase().startsWith('TOTAL') ? 'B' : 'A';
+			return preinscripcionForm.querySelector('input[name="tipo"]:checked')?.value || null;
 		}
 
 		preinscripcionForm.addEventListener('submit', async (event) => {
@@ -457,6 +488,29 @@ if (listaCursos && mensajeCursos) {
 		listaCursos.replaceChildren();
 		mensajeCursos.textContent = texto;
 		mensajeCursos.hidden = false;
+	}
+
+	function mostrarCursosMenu(cursos, mensaje = '') {
+		if (!menuCoursesList || !menuCoursesStatus) {
+			return;
+		}
+
+		const filas = cursos.map(curso => {
+			const fecha = fechaEspanola(curso.fecha_inicio);
+
+			if (!curso.modalidad || !fecha) {
+				return null;
+			}
+
+			const fila = document.createElement('li');
+			fila.className = 'menu-courses__item';
+			fila.textContent = `${curso.modalidad} — ${fecha}`;
+			return fila;
+		}).filter(Boolean);
+
+		menuCoursesList.replaceChildren(...filas);
+		menuCoursesStatus.textContent = mensaje || (filas.length ? '' : 'No hay próximos cursos.');
+		menuCoursesStatus.hidden = !menuCoursesStatus.textContent;
 	}
 
 	function crearTarjetaCurso(curso) {
@@ -572,7 +626,9 @@ if (listaCursos && mensajeCursos) {
 			}
 
 			const cursos = await respuesta.json();
-			pintarCursos(Array.isArray(cursos) ? cursos : []);
+			const cursosProximos = Array.isArray(cursos) ? cursos : [];
+			pintarCursos(cursosProximos);
+			mostrarCursosMenu(cursosProximos);
 		} catch {
 			if (intento < ESPERAS_REINTENTO_CURSOS_MS.length) {
 				await esperar(ESPERAS_REINTENTO_CURSOS_MS[intento]);
@@ -581,6 +637,7 @@ if (listaCursos && mensajeCursos) {
 			}
 
 			mostrarMensajeCursos('No se han podido cargar los próximos cursos. Inténtalo de nuevo más tarde.');
+			mostrarCursosMenu([], 'No se han podido cargar los cursos.');
 		}
 	}
 
