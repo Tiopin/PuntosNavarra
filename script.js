@@ -5,6 +5,7 @@ const menuCoursesToggle = document.querySelector('.site-navigation__courses-togg
 const menuCoursesPanel = document.querySelector('#menu-courses-panel');
 const menuCoursesList = document.querySelector('#menu-courses-list');
 const menuCoursesStatus = document.querySelector('#menu-courses-status');
+const heroMapLink = document.querySelector('#hero-map-link');
 const schoolSection = document.querySelector('.school-section');
 const schoolToggle = document.querySelector('.school-section__toggle');
 const schoolPanel = document.querySelector('#school-section-panel');
@@ -138,6 +139,43 @@ if (schoolSection && schoolToggle && schoolPanel) {
 		schoolMapPanel.setAttribute('aria-hidden', 'true');
 	};
 
+	const openSchoolMap = () => {
+		if (!schoolMapToggle || !schoolMapPanel) {
+			return;
+		}
+
+		navigationInProgress = true;
+		navigationTarget = schoolMapPanel;
+		openedFromContact = true;
+		schoolSection.classList.add('is-open');
+		schoolToggle.setAttribute('aria-expanded', 'true');
+		schoolToggle.hidden = true;
+		schoolPanel.hidden = false;
+		schoolMapToggle.setAttribute('aria-expanded', 'true');
+		schoolMapToggle.textContent = 'OCULTAR MAPA ↑';
+		schoolMapPanel.hidden = false;
+		schoolMapPanel.setAttribute('aria-hidden', 'false');
+
+		window.requestAnimationFrame(() => {
+			schoolMapPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+
+		let completed = false;
+		const restoreNavigation = () => {
+			if (completed) {
+				return;
+			}
+
+			completed = true;
+			navigationInProgress = false;
+			navigationTarget = null;
+			window.removeEventListener('scrollend', restoreNavigation);
+		};
+
+		window.addEventListener('scrollend', restoreNavigation, { once: true });
+		window.setTimeout(restoreNavigation, 1200);
+	};
+
 	const closeSchoolSection = () => {
 		closeSchoolMap();
 		openedFromContact = false;
@@ -197,6 +235,13 @@ if (schoolSection && schoolToggle && schoolPanel) {
 			navigateFromMenu(link.getAttribute('href'));
 		});
 	});
+
+	if (heroMapLink) {
+		heroMapLink.addEventListener('click', event => {
+			event.preventDefault();
+			openSchoolMap();
+		});
+	}
 
 	schoolToggle.addEventListener('click', () => {
 		schoolSection.classList.add('is-open');
@@ -473,6 +518,10 @@ if (listaCursos && mensajeCursos) {
 			: 'https://aulacontrol.puntosnavarra.com';
 		return `${base}/public/cursos-proximos`;
 	})();
+	const API_CURSOS_PROGRAMADOS = API_CURSOS.replace(
+		'/public/cursos-proximos',
+		'/public/cursos-programados',
+	);
 
 	function partesFecha(iso) {
 		const partes = String(iso || '').split('-');
@@ -628,7 +677,6 @@ if (listaCursos && mensajeCursos) {
 			const cursos = await respuesta.json();
 			const cursosProximos = Array.isArray(cursos) ? cursos : [];
 			pintarCursos(cursosProximos);
-			mostrarCursosMenu(cursosProximos);
 		} catch {
 			if (intento < ESPERAS_REINTENTO_CURSOS_MS.length) {
 				await esperar(ESPERAS_REINTENTO_CURSOS_MS[intento]);
@@ -637,6 +685,19 @@ if (listaCursos && mensajeCursos) {
 			}
 
 			mostrarMensajeCursos('No se han podido cargar los próximos cursos. Inténtalo de nuevo más tarde.');
+		}
+	}
+
+	async function cargarCursosMenu() {
+		try {
+			const respuesta = await fetch(API_CURSOS_PROGRAMADOS);
+			if (!respuesta.ok) {
+				throw new Error('Respuesta no válida');
+			}
+
+			const cursos = await respuesta.json();
+			mostrarCursosMenu(Array.isArray(cursos) ? cursos : []);
+		} catch {
 			mostrarCursosMenu([], 'No se han podido cargar los cursos.');
 		}
 	}
@@ -644,4 +705,5 @@ if (listaCursos && mensajeCursos) {
 	window.pintarCursosProximos = pintarCursos;
 
 	cargarCursos();
+	cargarCursosMenu();
 }
