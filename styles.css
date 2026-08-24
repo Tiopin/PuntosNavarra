@@ -1689,6 +1689,190 @@ a {
 	line-height: 1.45;
 }
 
+.preinscripcion__proteccion-datos {
+	margin-top: 14px;
+	padding: 12px;
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	background: #fcfcfa;
+	color: #333331;
+	font-size: 0.8rem;
+	line-height: 1.45;
+}
+
+.preinscripcion__proteccion-datos-titulo {
+	margin: 0 0 8px;
+	color: var(--black);
+	font-size: 0.86rem;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+
+.preinscripcion__proteccion-datos p {
+	margin: 6px 0 0;
+}
+
+.preinscripcion__proteccion-datos p:first-of-type {
+	margin-top: 0;
+}
+
+.preinscripcion__proteccion-datos a {
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.preinscripcion__proteccion-datos-enlace-wrap {
+	margin-top: 10px;
+}
+
+.preinscripcion__proteccion-datos-enlace {
+	font-weight: 800;
+	letter-spacing: 0.01em;
+}
+
+.politica-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgba(20, 20, 20, 0.62);
+}
+
+.politica-modal[hidden] {
+	display: none;
+}
+
+.politica-modal__panel {
+	width: min(860px, 100%);
+	max-height: min(86vh, 820px);
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	background: var(--white);
+	box-shadow: 0 18px 42px rgba(21, 21, 21, 0.28);
+	overflow: hidden;
+}
+
+.politica-modal__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 14px;
+	padding: 14px 16px;
+	border-bottom: 1px solid var(--border);
+	background: #fbfbf9;
+}
+
+.politica-modal__header h3 {
+	margin: 0;
+	color: var(--black);
+	font-size: 1.02rem;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+
+.politica-modal__cerrar {
+	min-height: 34px;
+	padding: 0 12px;
+	border: 1px solid var(--border);
+	border-radius: 4px;
+	background: var(--white);
+	color: var(--black);
+	font: inherit;
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.03em;
+	cursor: pointer;
+}
+
+.politica-modal__cerrar:hover,
+.politica-modal__cerrar:focus-visible {
+	border-color: var(--gold-dark);
+	background: #f5f5f2;
+}
+
+.politica-modal__cerrar:focus-visible {
+	outline: 2px solid var(--gold-dark);
+	outline-offset: 1px;
+}
+
+.politica-modal__contenido {
+	max-height: calc(min(86vh, 820px) - 64px);
+	padding: 16px;
+	overflow-y: auto;
+	color: #2f2f2c;
+	font-size: 0.86rem;
+	line-height: 1.5;
+}
+
+.politica-modal__contenido h4 {
+	margin: 0 0 12px;
+	color: var(--black);
+	font-size: 0.92rem;
+	font-weight: 800;
+	letter-spacing: 0.02em;
+}
+
+.politica-modal__contenido h5 {
+	margin: 14px 0 6px;
+	color: var(--black);
+	font-size: 0.88rem;
+	font-weight: 800;
+	letter-spacing: 0.01em;
+}
+
+.politica-modal__contenido p {
+	margin: 0 0 10px;
+}
+
+.politica-modal__contenido ul {
+	margin: 0 0 10px;
+	padding-left: 18px;
+}
+
+.politica-modal__contenido li {
+	margin-bottom: 5px;
+}
+
+.politica-modal__contenido a {
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+body.modal-abierto {
+	overflow: hidden;
+}
+
+.preinscripcion__consentimiento {
+	margin-top: 12px;
+	padding: 10px 12px;
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	background: var(--white);
+}
+
+.preinscripcion__consentimiento label {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	color: #333331;
+	font-size: 0.81rem;
+	line-height: 1.45;
+	cursor: pointer;
+}
+
+.preinscripcion__consentimiento input[type="checkbox"] {
+	margin-top: 2px;
+	flex: 0 0 auto;
+}
+
+.preinscripcion__consentimiento input[type="checkbox"]:focus-visible {
+	outline: 2px solid var(--gold-dark);
+	outline-offset: 2px;
+}
+
 .preinscripcion__enviar {
 	min-height: 40px;
 	margin-top: 14px;
@@ -1753,5 +1937,32 @@ a {
 
 	.preinscripcion__campos {
 		grid-template-columns: 1fr;
+	}
+
+	.preinscripcion__proteccion-datos,
+	.preinscripcion__consentimiento {
+		padding: 10px;
+	}
+
+	.politica-modal {
+		padding: 10px;
+	}
+
+	.politica-modal__panel {
+		max-height: 92vh;
+	}
+
+	.politica-modal__header {
+		padding: 12px;
+	}
+
+	.politica-modal__header h3 {
+		font-size: 0.95rem;
+	}
+
+	.politica-modal__contenido {
+		max-height: calc(92vh - 58px);
+		padding: 12px;
+		font-size: 0.84rem;
 	}
 }

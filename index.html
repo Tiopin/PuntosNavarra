@@ -256,14 +256,6 @@
 					</div>
 
 					<div class="preinscripcion__campo preinscripcion__campo--recomendado">
-						<label for="preinscripcion-dni">
-							DNI/NIE
-							<span class="preinscripcion__recomendado">Recomendado</span>
-						</label>
-						<input type="text" id="preinscripcion-dni" name="dni_nie" maxlength="20">
-					</div>
-
-					<div class="preinscripcion__campo preinscripcion__campo--recomendado">
 						<label for="preinscripcion-telefono">
 							Teléfono
 							<span class="preinscripcion__recomendado">Recomendado</span>
@@ -286,9 +278,103 @@
 						La preinscripción no garantiza la reserva de plaza. Nos pondremos en contacto contigo para confirmarla.
 					</p>
 
+					<section class="preinscripcion__proteccion-datos" aria-labelledby="preinscripcion-proteccion-datos-titulo">
+						<h3 class="preinscripcion__proteccion-datos-titulo" id="preinscripcion-proteccion-datos-titulo">Información básica sobre protección de datos</h3>
+						<p><strong>Responsable:</strong> Centro de Sensibilización y Reeducación Vial 310014 (CIF B71307946).</p>
+						<p><strong>Finalidad:</strong> gestionar tu solicitud de preinscripción y contactar contigo en relación con el curso solicitado.</p>
+						<p><strong>Legitimación:</strong> aplicación de medidas precontractuales a petición de la persona interesada.</p>
+						<p><strong>Conservación:</strong> si no llegas a matricularte, máximo 6 meses desde la última gestión o contacto, salvo obligación legal aplicable.</p>
+						<p><strong>Destinatarios:</strong> no se prevén cesiones de datos, salvo obligación legal. Podrán acceder proveedores que presten servicios técnicos como encargados del tratamiento.</p>
+						<p><strong>Derechos:</strong> puedes ejercer tus derechos de protección de datos escribiendo a <a href="mailto:puntos@autobaranain.com">puntos@autobaranain.com</a>.</p>
+						<p class="preinscripcion__proteccion-datos-enlace-wrap">
+							<a
+								class="preinscripcion__proteccion-datos-enlace"
+								href="#preinscripcion-politica-modal"
+								id="preinscripcion-politica-link"
+								aria-haspopup="dialog"
+								aria-controls="preinscripcion-politica-modal"
+							>Política de Privacidad</a>
+						</p>
+					</section>
+
+					<div class="preinscripcion__consentimiento">
+						<label for="preinscripcion-rgpd-informado">
+							<input type="checkbox" id="preinscripcion-rgpd-informado" name="rgpd_informado">
+							<span>He leído la información sobre protección de datos y he sido informado sobre el tratamiento de mis datos personales.</span>
+						</label>
+					</div>
+
 					<button class="preinscripcion__enviar" type="submit">Enviar preinscripción</button>
 					<p class="preinscripcion__resultado" id="preinscripcion-resultado" role="status" hidden></p>
 			</form>
+
+			<div
+				class="politica-modal"
+				id="preinscripcion-politica-modal"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="preinscripcion-politica-modal-titulo"
+				hidden
+			>
+				<div class="politica-modal__panel" role="document">
+					<div class="politica-modal__header">
+						<h3 id="preinscripcion-politica-modal-titulo">Política de Privacidad</h3>
+						<button type="button" class="politica-modal__cerrar" data-politica-cerrar aria-label="Cerrar Política de Privacidad">Cerrar</button>
+					</div>
+
+					<div class="politica-modal__contenido">
+						<h4>POLÍTICA DE PRIVACIDAD – FORMULARIO DE PREINSCRIPCIÓN</h4>
+
+						<h5>1. Responsable del tratamiento</h5>
+						<p>Centro de Sensibilización y Reeducación Vial 310014<br>
+						CIF: B71307946<br>
+						C/ Pedro Bidagor, 7 Bajo, 31010 Barañáin (Navarra)<br>
+						Teléfono: 649 230 920<br>
+						Correo electrónico: <a href="mailto:puntos@autobaranain.com">puntos@autobaranain.com</a></p>
+
+						<h5>2. Datos que tratamos</h5>
+						<p>A través del formulario de preinscripción podemos tratar los siguientes datos facilitados por la persona interesada:</p>
+						<ul>
+							<li>Nombre</li>
+							<li>Apellidos</li>
+							<li>Teléfono</li>
+							<li>Tipo de preinscripción</li>
+							<li>Curso seleccionado, cuando corresponda</li>
+							<li>Observaciones que la persona interesada incluya voluntariamente</li>
+						</ul>
+						<p>El formulario público no solicita DNI/NIE.</p>
+
+						<h5>3. Finalidad del tratamiento</h5>
+						<p>Los datos se tratarán exclusivamente para gestionar la solicitud de preinscripción y contactar con la persona interesada en relación con el curso solicitado.</p>
+						<p>No utilizaremos estos datos para publicidad ni comunicaciones comerciales.</p>
+
+						<h5>4. Legitimación</h5>
+						<p>La base jurídica del tratamiento es la aplicación de medidas precontractuales a petición de la persona interesada, conforme al artículo 6.1.b del Reglamento General de Protección de Datos (RGPD).</p>
+
+						<h5>5. Plazo de conservación</h5>
+						<p>Si la persona interesada no llega a matricularse, los datos se conservarán durante un máximo de 6 meses desde la última gestión o contacto, salvo que resulte aplicable una obligación legal que exija un plazo distinto.</p>
+
+						<h5>6. Destinatarios y proveedores técnicos</h5>
+						<p>No se prevén cesiones de datos a terceros, salvo obligación legal.</p>
+						<p>Para el funcionamiento técnico del servicio pueden intervenir proveedores que actúen como encargados del tratamiento y que presten servicios de alojamiento, infraestructura o mantenimiento.</p>
+						<p>La aplicación AulaControl y su base de datos están alojadas en infraestructura situada en la Unión Europea.</p>
+
+						<h5>7. Transferencias internacionales</h5>
+						<p>No se han identificado transferencias internacionales fuera del Espacio Económico Europeo en el flujo de datos del formulario de preinscripción hacia AulaControl.</p>
+						<p>Algunos servicios externos de la página, como Google Maps o enlaces a servicios de terceros, pueden estar sujetos a sus propias políticas de privacidad cuando el usuario interactúa con ellos.</p>
+
+						<h5>8. Derechos de las personas interesadas</h5>
+						<p>Puedes solicitar el acceso a tus datos personales, su rectificación o supresión y, cuando proceda, la oposición al tratamiento, su limitación y la portabilidad.</p>
+						<p>Puedes ejercer estos derechos escribiendo a:</p>
+						<p><a href="mailto:puntos@autobaranain.com">puntos@autobaranain.com</a></p>
+						<p>Indica el derecho que deseas ejercer y los datos necesarios para identificar tu solicitud.</p>
+						<p>También tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD).</p>
+
+						<h5>9. Actualización de esta política</h5>
+						<p>Esta Política de Privacidad podrá actualizarse cuando sea necesario para reflejar cambios legales, técnicos u organizativos.</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 

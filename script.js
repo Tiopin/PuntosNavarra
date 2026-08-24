@@ -397,8 +397,13 @@ if (enrolButton && preinscripcionSection) {
 	if (preinscripcionForm) {
 		const botonEnviar = preinscripcionForm.querySelector('.preinscripcion__enviar');
 		const resultado = preinscripcionForm.querySelector('#preinscripcion-resultado');
+		const consentimientoRgpd = preinscripcionForm.querySelector('#preinscripcion-rgpd-informado');
+		const enlacePolitica = preinscripcionForm.querySelector('#preinscripcion-politica-link');
+		const modalPolitica = document.querySelector('#preinscripcion-politica-modal');
+		const botonCerrarModalPolitica = modalPolitica?.querySelector('[data-politica-cerrar]');
 		const textoBotonOriginal = botonEnviar ? botonEnviar.textContent : '';
 		let enviando = false;
+		let focoAnteriorModal = null;
 
 		const API_PREINSCRIPCIONES = (() => {
 			const host = window.location.hostname;
@@ -430,6 +435,96 @@ if (enrolButton && preinscripcionSection) {
 			return preinscripcionForm.querySelector('input[name="tipo"]:checked')?.value || null;
 		}
 
+		function elementosEnModal() {
+			if (!modalPolitica) {
+				return [];
+			}
+
+			return Array.from(modalPolitica.querySelectorAll(
+				'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+			)).filter((elemento) => !elemento.hasAttribute('hidden'));
+		}
+
+		function cerrarModalPolitica() {
+			if (!modalPolitica || modalPolitica.hidden) {
+				return;
+			}
+
+			modalPolitica.hidden = true;
+			document.body.classList.remove('modal-abierto');
+
+			if (focoAnteriorModal instanceof HTMLElement) {
+				focoAnteriorModal.focus();
+			} else {
+				enlacePolitica?.focus();
+			}
+		}
+
+		function alPulsarTeclaModal(event) {
+			if (!modalPolitica || modalPolitica.hidden) {
+				return;
+			}
+
+			if (event.key === 'Escape') {
+				event.preventDefault();
+				cerrarModalPolitica();
+				return;
+			}
+
+			if (event.key !== 'Tab') {
+				return;
+			}
+
+			const foco = elementosEnModal();
+			if (!foco.length) {
+				event.preventDefault();
+				return;
+			}
+
+			const primero = foco[0];
+			const ultimo = foco[foco.length - 1];
+			const actual = document.activeElement;
+
+			if (event.shiftKey && actual === primero) {
+				event.preventDefault();
+				ultimo.focus();
+				return;
+			}
+
+			if (!event.shiftKey && actual === ultimo) {
+				event.preventDefault();
+				primero.focus();
+			}
+		}
+
+		function abrirModalPolitica(event) {
+			event.preventDefault();
+
+			if (!modalPolitica) {
+				return;
+			}
+
+			focoAnteriorModal = document.activeElement;
+			modalPolitica.hidden = false;
+			document.body.classList.add('modal-abierto');
+
+			window.requestAnimationFrame(() => {
+				const foco = botonCerrarModalPolitica || elementosEnModal()[0];
+				foco?.focus();
+			});
+		}
+
+		enlacePolitica?.addEventListener('click', abrirModalPolitica);
+		botonCerrarModalPolitica?.addEventListener('click', cerrarModalPolitica);
+
+		modalPolitica?.addEventListener('click', (event) => {
+			if (event.target === modalPolitica) {
+				cerrarModalPolitica();
+			}
+		});
+
+		document.addEventListener('keydown', alPulsarTeclaModal);
+
 		preinscripcionForm.addEventListener('submit', async (event) => {
 			event.preventDefault();
 
@@ -440,6 +535,12 @@ if (enrolButton && preinscripcionSection) {
 			const tipo = tipoDelCursoSeleccionado();
 			if (!tipo) {
 				mostrarResultado('Indica qué necesitas antes de enviar la preinscripción.', 'error');
+				return;
+			}
+
+			if (!consentimientoRgpd?.checked) {
+				mostrarResultado('Debes leer la información sobre protección de datos antes de enviar la preinscripción.', 'error');
+				consentimientoRgpd?.focus();
 				return;
 			}
 
@@ -457,7 +558,6 @@ if (enrolButton && preinscripcionSection) {
 				tipo,
 				nombre: valorCampo('#preinscripcion-nombre'),
 				apellidos: valorCampo('#preinscripcion-apellidos'),
-				dni_nie: valorCampo('#preinscripcion-dni'),
 				telefono: valorCampo('#preinscripcion-telefono'),
 				observaciones: valorCampo('#preinscripcion-observaciones'),
 				curso_id: Number.isInteger(cursoId) && cursoId > 0 ? cursoId : null,
