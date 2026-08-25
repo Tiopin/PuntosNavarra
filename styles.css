@@ -125,11 +125,34 @@ a {
 }
 
 .brand__subtitle {
+	display: inline-flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.4em;
 	color: #111111;
 	font-size: 1.15rem;
 	font-weight: 900;
 	letter-spacing: 0.18em;
 	line-height: 1;
+}
+
+.brand__subtitle-main {
+	letter-spacing: 0.18em;
+}
+
+.brand__subtitle-main::after {
+	display: inline-block;
+	width: 1px;
+	height: 0.9em;
+	margin: 0 0.55em;
+	background: #d62828;
+	content: "";
+	vertical-align: -0.12em;
+}
+
+.brand__subtitle-number {
+	letter-spacing: normal;
+	white-space: nowrap;
 }
 
 .site-navigation {
