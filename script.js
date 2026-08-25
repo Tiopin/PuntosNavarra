@@ -401,9 +401,32 @@ if (enrolButton && preinscripcionSection) {
 		const enlacePolitica = preinscripcionForm.querySelector('#preinscripcion-politica-link');
 		const modalPolitica = document.querySelector('#preinscripcion-politica-modal');
 		const botonCerrarModalPolitica = modalPolitica?.querySelector('[data-politica-cerrar]');
+		const botonToggleProteccionDatos = document.querySelector('#preinscripcion-proteccion-datos-toggle');
+		const detalleProteccionDatos = document.querySelector('#preinscripcion-proteccion-datos-detalle');
+		const indicadorProteccionDatos = botonToggleProteccionDatos?.querySelector('.preinscripcion__proteccion-datos-indicador');
 		const textoBotonOriginal = botonEnviar ? botonEnviar.textContent : '';
 		let enviando = false;
 		let focoAnteriorModal = null;
+
+		function actualizarEstadoProteccionDatos() {
+			if (!botonToggleProteccionDatos || !detalleProteccionDatos || !indicadorProteccionDatos) {
+				return;
+			}
+
+			const abierto = !detalleProteccionDatos.hidden;
+			botonToggleProteccionDatos.setAttribute('aria-expanded', String(abierto));
+			indicadorProteccionDatos.textContent = abierto ? '▲' : '▼';
+		}
+
+		botonToggleProteccionDatos?.addEventListener('click', () => {
+			if (!detalleProteccionDatos) {
+				return;
+			}
+
+			detalleProteccionDatos.hidden = !detalleProteccionDatos.hidden;
+			actualizarEstadoProteccionDatos();
+		});
+		actualizarEstadoProteccionDatos();
 
 		const API_PREINSCRIPCIONES = (() => {
 			const host = window.location.hostname;

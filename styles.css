@@ -1700,19 +1700,44 @@ a {
 	line-height: 1.45;
 }
 
-.preinscripcion__proteccion-datos-titulo {
-	margin: 0 0 8px;
+.preinscripcion__proteccion-datos-toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
 	color: var(--black);
+	font: inherit;
 	font-size: 0.86rem;
 	font-weight: 800;
 	letter-spacing: 0.02em;
+	text-align: left;
+	cursor: pointer;
+}
+
+.preinscripcion__proteccion-datos-toggle:focus-visible {
+	outline: 2px solid var(--gold-dark);
+	outline-offset: 2px;
+}
+
+.preinscripcion__proteccion-datos-indicador {
+	font-size: 0.78rem;
+	line-height: 1;
+}
+
+.preinscripcion__proteccion-datos-resumen {
+	margin-top: 8px;
 }
 
 .preinscripcion__proteccion-datos p {
 	margin: 6px 0 0;
 }
 
-.preinscripcion__proteccion-datos p:first-of-type {
+.preinscripcion__proteccion-datos-resumen p:first-of-type,
+.preinscripcion__proteccion-datos-detalle p:first-of-type {
 	margin-top: 0;
 }
 
@@ -1728,6 +1753,10 @@ a {
 .preinscripcion__proteccion-datos-enlace {
 	font-weight: 800;
 	letter-spacing: 0.01em;
+}
+
+.preinscripcion__proteccion-datos-detalle[hidden] {
+	display: none;
 }
 
 .politica-modal {

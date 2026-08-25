@@ -278,13 +278,29 @@
 					</p>
 
 					<section class="preinscripcion__proteccion-datos" aria-labelledby="preinscripcion-proteccion-datos-titulo">
-						<h3 class="preinscripcion__proteccion-datos-titulo" id="preinscripcion-proteccion-datos-titulo">Información básica sobre protección de datos</h3>
-						<p><strong>Responsable:</strong> Centro de Sensibilización y Reeducación Vial 310014 (CIF B71307946).</p>
-						<p><strong>Finalidad:</strong> gestionar tu solicitud de preinscripción y contactar contigo en relación con el curso solicitado.</p>
-						<p><strong>Legitimación:</strong> aplicación de medidas precontractuales a petición de la persona interesada.</p>
-						<p><strong>Conservación:</strong> si no llegas a matricularte, máximo 6 meses desde la última gestión o contacto, salvo obligación legal aplicable.</p>
-						<p><strong>Destinatarios:</strong> no se prevén cesiones de datos, salvo obligación legal. Podrán acceder proveedores que presten servicios técnicos como encargados del tratamiento.</p>
-						<p><strong>Derechos:</strong> puedes ejercer tus derechos de protección de datos escribiendo a <a href="mailto:puntos@autobaranain.com">puntos@autobaranain.com</a>.</p>
+						<button
+							type="button"
+							class="preinscripcion__proteccion-datos-toggle"
+							id="preinscripcion-proteccion-datos-toggle"
+							aria-expanded="false"
+							aria-controls="preinscripcion-proteccion-datos-detalle"
+						>
+							<span id="preinscripcion-proteccion-datos-titulo">Información básica sobre protección de datos</span>
+							<span class="preinscripcion__proteccion-datos-indicador" aria-hidden="true">▼</span>
+						</button>
+
+						<div class="preinscripcion__proteccion-datos-resumen">
+							<p><strong>Responsable:</strong> Centro de Sensibilización y Reeducación Vial 310014 (CIF B71307946).</p>
+							<p><strong>Finalidad:</strong> gestionar tu solicitud de preinscripción y contactar contigo en relación con el curso solicitado.</p>
+						</div>
+
+						<div id="preinscripcion-proteccion-datos-detalle" hidden>
+							<p><strong>Legitimación:</strong> aplicación de medidas precontractuales a petición de la persona interesada.</p>
+							<p><strong>Conservación:</strong> si no llegas a matricularte, máximo 6 meses desde la última gestión o contacto, salvo obligación legal aplicable.</p>
+							<p><strong>Destinatarios:</strong> no se prevén cesiones de datos, salvo obligación legal. Podrán acceder proveedores que presten servicios técnicos como encargados del tratamiento.</p>
+							<p><strong>Derechos:</strong> puedes ejercer tus derechos de protección de datos escribiendo a <a href="mailto:puntos@autobaranain.com">puntos@autobaranain.com</a>.</p>
+						</div>
+
 						<p class="preinscripcion__proteccion-datos-enlace-wrap">
 							<a
 								class="preinscripcion__proteccion-datos-enlace"
