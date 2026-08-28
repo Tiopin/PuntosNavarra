@@ -668,15 +668,20 @@ if (listaCursos && mensajeCursos) {
 		}
 
 		const filas = cursos.map(curso => {
-			const fecha = fechaEspanola(curso.fecha_inicio);
+			const fechaInicio = fechaEspanola(curso.fecha_inicio);
 
-			if (!curso.modalidad || !fecha) {
+			if (!fechaInicio) {
 				return null;
 			}
 
+			const fechaFin = fechaEspanola(curso.fecha_fin);
+			const texto = fechaFin && fechaFin !== fechaInicio
+				? `${fechaInicio} – ${fechaFin}`
+				: fechaInicio;
+
 			const fila = document.createElement('li');
 			fila.className = 'menu-courses__item';
-			fila.textContent = `${curso.modalidad} — ${fecha}`;
+			fila.textContent = texto;
 			return fila;
 		}).filter(Boolean);
 
