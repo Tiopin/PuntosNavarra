@@ -93,8 +93,6 @@
 					<span class="support-card__icon" aria-hidden="true">◉</span>
 					<div class="support-card__content">
 						<h2>He perdido puntos</h2>
-						<span class="advantage__price">215 €</span>
-						<p>Recupera puntos sin perder tu permiso.</p>
 					</div>
 					<span class="support-card__arrow" aria-hidden="true">→</span>
 					<div class="points-info-panel" id="points-info-panel" hidden>
@@ -110,8 +108,6 @@
 					<span class="support-card__icon" aria-hidden="true">◉</span>
 					<div class="support-card__content">
 						<h2>He perdido el permiso</h2>
-						<span class="advantage__price">405 €</span>
-						<p>Vuelve a conducir cuanto antes.</p>
 					</div>
 					<span class="support-card__arrow" aria-hidden="true">→</span>
 					<div class="points-info-panel permit-info-panel" id="permit-info-panel" hidden>
@@ -119,21 +115,6 @@
 						<p>Curso de <strong class="points-info-panel__highlight">20 horas</strong>, con <strong class="points-info-panel__highlight">examen DGT</strong>.</p>
 						<h3>¿Con cuántos puntos vuelvo a empezar?</h3>
 						<p>Recuperas el permiso con <strong class="points-info-panel__highlight">8 puntos</strong>.</p>
-					</div>
-				</article>
-
-				<article class="support-card advantage--sensibilizacion" role="button" tabindex="0" aria-expanded="false" aria-controls="sensibilizacion-info-panel">
-					<span class="support-card__icon" aria-hidden="true">✓</span>
-					<div>
-						<h2>Sensibilización y Reeducación Vial</h2>
-						<span class="advantage__price">405 €</span>
-					</div>
-					<span class="support-card__arrow" aria-hidden="true">→</span>
-					<div class="points-info-panel advantage-info-panel" id="sensibilizacion-info-panel" hidden>
-						<h3>¿En qué consiste?</h3>
-						<p>Curso de <strong class="points-info-panel__highlight">20 horas</strong>, <strong class="points-info-panel__highlight">sin examen</strong>.</p>
-						<h3>¿Cuándo se realiza?</h3>
-						<p>Por <strong class="points-info-panel__highlight">mandamiento judicial</strong>.</p>
 					</div>
 				</article>
 			</div>
@@ -144,10 +125,16 @@
 		<div class="container">
 			<div class="courses-section__header">
 				<h2 id="courses-title">Próximos cursos</h2>
+				<button class="courses-section__toggle" type="button" aria-expanded="false" aria-controls="courses-panel">
+					<span>Ver cursos</span>
+					<span class="courses-section__toggle-icon" aria-hidden="true">↓</span>
+				</button>
 			</div>
 
-			<div class="course-list" id="course-list"></div>
-			<p class="course-list__mensaje" id="course-list-mensaje" role="status" hidden></p>
+			<div class="courses-section__panel" id="courses-panel" hidden>
+				<div class="course-list" id="course-list"></div>
+				<p class="course-list__mensaje" id="course-list-mensaje" role="status">Cargando cursos...</p>
+			</div>
 		</div>
 	</section>
 

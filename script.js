@@ -626,6 +626,17 @@ if (enrolButton && preinscripcionSection) {
 
 const listaCursos = document.querySelector('#course-list');
 const mensajeCursos = document.querySelector('#course-list-mensaje');
+const coursesToggle = document.querySelector('.courses-section__toggle');
+const coursesPanel = document.querySelector('#courses-panel');
+
+if (coursesToggle && coursesPanel) {
+	coursesToggle.addEventListener('click', () => {
+		const isOpen = coursesToggle.getAttribute('aria-expanded') !== 'true';
+		coursesToggle.setAttribute('aria-expanded', String(isOpen));
+		coursesToggle.querySelector('span').textContent = isOpen ? 'Ocultar cursos' : 'Ver cursos';
+		coursesPanel.hidden = !isOpen;
+	});
+}
 
 if (listaCursos && mensajeCursos) {
 	const MESES_CURSO = [
@@ -697,9 +708,7 @@ if (listaCursos && mensajeCursos) {
 		}
 
 		const tarjeta = document.createElement('article');
-		tarjeta.className = 'course-card course-card--seleccionable';
-		tarjeta.setAttribute('role', 'button');
-		tarjeta.setAttribute('tabindex', '0');
+		tarjeta.className = 'course-card';
 
 		const etiqueta = curso.modalidad || '';
 
@@ -707,19 +716,8 @@ if (listaCursos && mensajeCursos) {
 			tarjeta.classList.add('course-card--total');
 		}
 
-		if (etiqueta) {
-			const tipo = document.createElement('span');
-			tipo.className = 'course-card__type';
-			tipo.textContent = etiqueta;
-			tarjeta.appendChild(tipo);
-		}
-
-		const cuerpo = document.createElement('div');
-		cuerpo.className = 'course-card__body';
-
 		const bloqueFecha = document.createElement('div');
 		bloqueFecha.className = 'course-card__date';
-		bloqueFecha.innerHTML = '<span class="course-card__calendar" aria-hidden="true">▦</span>';
 
 		const dia = document.createElement('strong');
 		dia.textContent = String(Number(partes[2]));
@@ -734,23 +732,20 @@ if (listaCursos && mensajeCursos) {
 
 		const recuperacion = etiqueta === 'TOTAL' ? 'PERMISO' : 'PUNTOS';
 		const titulo = document.createElement('p');
-		titulo.innerHTML = `Recuperación de <strong>${recuperacion}</strong>`;
+		titulo.textContent = etiqueta;
 		detalles.appendChild(titulo);
-
-		// Solo los cursos de varios días necesitan indicar el rango.
 		const rango = curso.fecha_fin && curso.fecha_fin !== curso.fecha_inicio
 			? `Inicio: ${fechaEspanola(curso.fecha_inicio)} · Fin: ${fechaEspanola(curso.fecha_fin)}`
 			: '';
 
-		if (rango) {
-			const fechas = document.createElement('span');
-			fechas.textContent = rango;
-			detalles.appendChild(fechas);
-		}
+		tarjeta.appendChild(bloqueFecha);
+		tarjeta.appendChild(detalles);
 
-		cuerpo.appendChild(bloqueFecha);
-		cuerpo.appendChild(detalles);
-		tarjeta.appendChild(cuerpo);
+		const boton = document.createElement('button');
+		boton.className = 'course-card__button';
+		boton.type = 'button';
+		boton.textContent = 'Inscribirme';
+		tarjeta.appendChild(boton);
 
 		const resumen = {
 			id: curso.id,
@@ -760,17 +755,9 @@ if (listaCursos && mensajeCursos) {
 			horario: rango,
 		};
 
-		const abrir = () => {
+		boton.addEventListener('click', () => {
 			if (typeof window.abrirPreinscripcion === 'function') {
 				window.abrirPreinscripcion(resumen);
-			}
-		};
-
-		tarjeta.addEventListener('click', abrir);
-		tarjeta.addEventListener('keydown', (event) => {
-			if (event.key === 'Enter' || event.key === ' ') {
-				event.preventDefault();
-				abrir();
 			}
 		});
 
